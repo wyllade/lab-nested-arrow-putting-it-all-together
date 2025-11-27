@@ -15,10 +15,8 @@ function createLoginTracker(user) {
 }
 
 // Example usage:
-const user1 = { username: "user1", password: "password123" };
-const login = createLoginTracker(user1);
+const user
+    = { username: "user1", password: "secure123" };
+const login = createLoginTracker(user);
 
-console.log(login("wrong"));        // Incorrect password
-console.log(login("123"));          // Incorrect password
-console.log(login("password123"));  // Login successful
-console.log(login("wrong"));        // Incorrect password or Account locked if already 3 failed
+
