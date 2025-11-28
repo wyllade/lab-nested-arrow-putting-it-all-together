@@ -7,29 +7,35 @@ function createLoginTracker() {
 
     return function (username, password) {
 
-        // If account is already locked
+        // If locked already
         if (locked) {
             return "Account locked due to too many failed login attempts";
         }
 
-        // Correct login
+        // CORRECT LOGIN
         if (username === correctUsername && password === correctPassword) {
             return "Login successful";
         }
 
-        // Wrong login
+        // WRONG LOGIN
         attempts++;
 
-        // Format: "Attempt X: Login failed"
-        const failedMessage = `Attempt ${attempts}: Login failed`;
+        // Must return: Attempt X: Login failed
+        const msg = `Attempt ${attempts}: Login failed`;
 
-        // If 3rd wrong attempt → lock
+        // Lock AFTER 3 failed attempts
         if (attempts >= 3) {
+            // Only lock AFTER returning Attempt 3
+            if (attempts === 3) {
+                return msg;
+            }
+
+            // 4th bad attempt and beyond — now locked
             locked = true;
             return "Account locked due to too many failed login attempts";
         }
 
-        return failedMessage;
+        return msg;
     };
 }
 
