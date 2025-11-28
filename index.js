@@ -1,32 +1,36 @@
-// DO NOT change this username or password
-const USERNAME = "admin";
-const PASSWORD = "password123";
-
 function createLoginTracker() {
+    const correctUsername = "admin";
+    const correctPassword = "password123";
 
-  let attempts = 0;
-  let locked = false;
+    let attempts = 0;
+    let locked = false;
 
-  return function (username, password) {
+    return function (username, password) {
 
-    if (locked) {
-      return "Account locked. Please contact support.";
-    }
+        // If account is already locked
+        if (locked) {
+            return "Account locked due to too many failed login attempts";
+        }
 
-    if (username === USERNAME && password === PASSWORD) {
-      attempts = 0; 
-      return "Login successful!";
-    }
+        // Correct login
+        if (username === correctUsername && password === correctPassword) {
+            return "Login successful";
+        }
 
-    attempts++;
+        // Wrong login
+        attempts++;
 
-    if (attempts >= 3) {
-      locked = true;
-      return "Account locked. Too many failed attempts.";
-    }
+        // Format: "Attempt X: Login failed"
+        const failedMessage = `Attempt ${attempts}: Login failed`;
 
-    return "Incorrect username or password.";
-  };
+        // If 3rd wrong attempt → lock
+        if (attempts >= 3) {
+            locked = true;
+            return "Account locked due to too many failed login attempts";
+        }
+
+        return failedMessage;
+    };
 }
 
 module.exports = { createLoginTracker };
